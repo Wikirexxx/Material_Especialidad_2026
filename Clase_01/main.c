@@ -1,19 +1,19 @@
 /*
-  STM32F405RGT6
-  Descripción Este codigo tiene la finalidad de explicar el funcionamiento
-  de los registros en el microcontrolador y la creación de las direcciones de
-  registros asignados a memoria
+ * STM32F405RGT6
+ * Descripción: Este codigo tiene la finalidad de explicar el funcionamiento
+ * de los registros en el microcontrolador y la creación de las direcciones de
+ * "registros asignados a memoria"
 */
-#include stdint.h
+#include <stdint.h>
 #define RCC_AHB1ENR_GPIOAEN 	(0x00000001UL)
 
 #define	__IO					volatile
 
-#define PERIPH_BASE				(0x40000000UL)				 Dirección base de los perifericos
-#define AHB_OFFSET				(0x00020000UL)				 Offset del bus AHB pag. 76
-#define AHB1PERIPH_BASE         (PERIPH_BASE + AHB_OFFSET)	 Primera dirección de AHB1
+#define PERIPH_BASE				(0x40000000UL)				// Dirección base de los perifericos
+#define AHB_OFFSET				(0x00020000UL)				// Offset del bus AHB pag. 76
+#define AHB1PERIPH_BASE         (PERIPH_BASE + AHB_OFFSET)	// Primera dirección de AHB1
 
- PAG 74
+// PAG 74
 #define GPIOA_OFFSET			(0x0000UL)
 #define GPIOB_OFFSET			(0x0400UL)
 #define GPIOC_OFFSET			(0x0800UL)
@@ -38,17 +38,17 @@
 
 #define RCC_BASE              (AHB1PERIPH_BASE + RCC_OFFSET)
 
-#define GPIOA               ((GPIO_TypeDef ) GPIOA_BASE)
-#define GPIOB               ((GPIO_TypeDef ) GPIOB_BASE)
-#define GPIOC               ((GPIO_TypeDef ) GPIOC_BASE)
-#define GPIOD               ((GPIO_TypeDef ) GPIOD_BASE)
-#define GPIOE               ((GPIO_TypeDef ) GPIOE_BASE)
-#define GPIOF               ((GPIO_TypeDef ) GPIOF_BASE)
-#define GPIOG               ((GPIO_TypeDef ) GPIOG_BASE)
-#define GPIOH               ((GPIO_TypeDef ) GPIOH_BASE)
-#define GPIOI               ((GPIO_TypeDef ) GPIOI_BASE)
+#define GPIOA               ((GPIO_TypeDef *) GPIOA_BASE)
+#define GPIOB               ((GPIO_TypeDef *) GPIOB_BASE)
+#define GPIOC               ((GPIO_TypeDef *) GPIOC_BASE)
+#define GPIOD               ((GPIO_TypeDef *) GPIOD_BASE)
+#define GPIOE               ((GPIO_TypeDef *) GPIOE_BASE)
+#define GPIOF               ((GPIO_TypeDef *) GPIOF_BASE)
+#define GPIOG               ((GPIO_TypeDef *) GPIOG_BASE)
+#define GPIOH               ((GPIO_TypeDef *) GPIOH_BASE)
+#define GPIOI               ((GPIO_TypeDef *) GPIOI_BASE)
 
-#define RCC                 ((RCC_TypeDef ) RCC_BASE)
+#define RCC                 ((RCC_TypeDef *) RCC_BASE)
 
 typedef struct
 {
@@ -100,14 +100,14 @@ void delay(volatile uint32_t t);
 
 int main()
 {
-	RCC-AHB1ENR = RCC_AHB1ENR_GPIOAEN;
-	GPIOA-MODER &= ~0x00000C00;
-	GPIOA-MODER =  0x00000400;
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+	GPIOA->MODER &= ~0x00000C00;
+	GPIOA->MODER |=  0x00000400;
 
 
 	while(1)
 	{
-		GPIOA-ODR ^= (1  5);   toggle PA5
+		GPIOA->ODR ^= (1 << 5);  // toggle PA5
 		delay(100);
 	}
 }
@@ -115,7 +115,7 @@ void delay(volatile uint32_t t)
 {
     while (t--)
     {
-        for (volatile int i = 0; i  1000; i++);
+        for (volatile int i = 0; i < 1000; i++);
     }
 }
 
