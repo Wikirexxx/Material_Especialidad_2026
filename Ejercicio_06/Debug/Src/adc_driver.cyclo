@@ -1,0 +1,2 @@
+../Src/adc_driver.c:5:6:ADC1_Init_3Channels_PA0_PA1_PA2	2
+../Src/adc_driver.c:96:6:ADC1_Read_3Channels	3
